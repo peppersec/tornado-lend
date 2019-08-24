@@ -5,6 +5,7 @@ import './interfaces/ICEther.sol';
 
 contract Wallet is CEtherLendingLibraryBase {
     address payable public owner;
+    address payable public pool;
     uint public denomination;
     mapping(address => bool) public deposits;
 
@@ -13,8 +14,9 @@ contract Wallet is CEtherLendingLibraryBase {
       _;
     }
 
-    constructor (ICEther _cEther, uint _denomination) CEtherLendingLibraryBase(_cEther) public {
+    constructor (ICEther _cEther, uint _denomination, address _pool) CEtherLendingLibraryBase(_cEther) public {
       owner = msg.sender;
+      pool = _pool;
       denomination = _denomination;
     }
 
@@ -36,6 +38,6 @@ contract Wallet is CEtherLendingLibraryBase {
 
     function withdrawInterest() public onlyOwner {
       uint interest = _withdrawInterest();
-      owner.transfer(interest);
+      pool.transfer(interest);
     }
 }
