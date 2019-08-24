@@ -24,6 +24,11 @@
     "ganache-cli": "^6.6.0",
     "openzeppelin-solidity": "^2.3.0",
     "truffle": "^5.0.33",
-    "web3": "^1.2.1"
+    "web3": "^1.2.1",
+    "web3-utils": "latest"
+  },
+  "devDependencies": {
+    "dotenv": "^8.1.0",
+    "truffle-hdwallet-provider": "^1.0.17"
   }
 }

@@ -1,5 +1,8 @@
 
 const { toWei } = require('web3-utils');
+require('dotenv').config();
+const HDWalletProvider = require('truffle-hdwallet-provider');
+const utils = require('web3-utils');
 
 module.exports = {
 
@@ -12,6 +15,16 @@ module.exports = {
       websockets: false,
       gas: 6700000,
     },
+
+    ropsten: {
+      provider: () => new HDWalletProvider(process.env.PRIVATE_KEY, 'https://ropsten.infura.io/v3/c7463beadf2144e68646ff049917b716'),
+      network_id: '*',
+      gas: 7000000,
+      gasPrice: utils.toWei('10', 'gwei'),
+      // confirmations: 0,
+      // timeoutBlocks: 200,
+      skipDryRun: true
+    }
   },
 
   // Set default mocha options here, use special reporters etc.
