@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-import "StakingPool.sol";
+import "./StakingPool.sol";
 
 contract EthStakingPool is StakingPool {
   function () external payable { }

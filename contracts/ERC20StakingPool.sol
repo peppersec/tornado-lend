@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
 import "openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
-import "StakingPool.sol";
+import "./StakingPool.sol";
 
 contract ERC20StakingPool is StakingPool {
   IERC20 public token;
