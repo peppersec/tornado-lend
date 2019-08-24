@@ -14,7 +14,7 @@ contract Wallet is CEtherLendingLibraryBase {
     _;
   }
 
-  constructor (ICEther _cEther, uint _denomination, address _pool) CEtherLendingLibraryBase(_cEther) public {
+  constructor (ICEther _cEther, uint _denomination, address payable _pool) CEtherLendingLibraryBase(_cEther) public {
     owner = msg.sender;
     pool = _pool;
     denomination = _denomination;

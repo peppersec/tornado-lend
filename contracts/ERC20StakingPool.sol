@@ -12,6 +12,7 @@ contract ERC20StakingPool is StakingPool {
 
   function deposit(uint256 amount) public payable {
     token.transferFrom(msg.sender, address(this), amount);
+    _deposit(msg.sender, amount);
   }
 
   function _getBalance() internal view returns(uint256 amount) {
