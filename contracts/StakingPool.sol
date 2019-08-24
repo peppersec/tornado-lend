@@ -20,6 +20,3 @@ contract StakingPool is ERC20 {
     _send(account, amount);
   }
 }
-
-
-
