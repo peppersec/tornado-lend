@@ -7,7 +7,7 @@ module.exports = {
     test: {
       host: 'localhost',
       port: 8545,
-      network_id: '333',
+      network_id: '3',
       gasPrice: toWei('1', 'gwei'),
       websockets: false,
       gas: 6700000,

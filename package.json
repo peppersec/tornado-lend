@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/peppersec/lendingLibrary#readme",
   "dependencies": {
+    "bn-chai": "^1.0.1",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "ganache-cli": "^6.6.0",
     "truffle": "^5.0.33",
     "web3": "^1.2.1"

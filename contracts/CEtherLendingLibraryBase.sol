@@ -11,34 +11,35 @@ contract CEtherLendingLibraryBase {
     }
 
     function _lend(uint amount) internal returns(bool) {
-        uint error = cEther.mint.value(amount)();
-        if (error != 0) {
-            return false;
-        }
+        cEther.mint.value(amount)();
+        // require(error == 0, 'got some error from compound');
         lendedAmount += amount;
         return true;
     }
 
     function _withdraw(uint amount) internal returns(bool) {
-        uint error = cEther.redeem(amount);
+        uint error = cEther.redeemUnderlying(amount);
         if (error != 0) {
             return false;
         }
-        lendedAmount += amount;
+        lendedAmount -= amount;
         return true;
     }
 
-    function interest() public view returns (uint) {
+    function interest() public returns (uint) {
         uint wholeBalance = cEther.balanceOfUnderlying(address(this));
-        if (wholeBalance < lendedAmount) {
+        if (wholeBalance <= lendedAmount) {
             return 0;
         }
-        return cEther.balanceOfUnderlying(address(this)) - lendedAmount;
+        return wholeBalance - lendedAmount;
     }
 
     function _withdrawInterest() internal returns(uint _interest) {
         _interest = interest();
         _withdraw(_interest);
+    }
+
+    function() external payable {
     }
 
 }
