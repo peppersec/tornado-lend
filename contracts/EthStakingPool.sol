@@ -9,7 +9,7 @@ contract EthStakingPool is StakingPool {
     _deposit(msg.sender, msg.value);
   }
 
-  function _getBalance() internal view returns(uint256 amount) {
+  function getBalance() public view returns(uint256 amount) {
     return address(this).balance;
   }
 
