@@ -18,7 +18,7 @@ Pool contract is independent of the main wallet and distributes funds depending 
 
 ## Challenges we ran into
 
-
+Integration with compound is not that easy as it supposed to be. One of issues that balanceOfUnderlying is external function (not a veiw as supposed), so we tried to execute it on-chain via staticcall but ended up using eth_call from frontend
 
 ## Accomplishments that we're proud of
 
