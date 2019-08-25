@@ -9,12 +9,14 @@ const { takeSnapshot, revertSnapshot, mineBlock } = require('../scripts/ganacheH
 
 const Wallet = artifacts.require('./Wallet.sol')
 const CEther = artifacts.require('./CEther.sol')
+const Pool = artifacts.require('./EthStakingPool.sol')
 const COMPOUND_ETH_CONTRACT = '0x42a628e0c5f3767930097b34b08dcf77e78e4f2b'
 
 contract('Wallet', async accounts => {
   let snapshotId
   let cEther
   let wallet
+  let pool
   const owner = accounts[0]
   const user1 = accounts[1]
   const user2 = accounts[2]
@@ -24,7 +26,8 @@ contract('Wallet', async accounts => {
 
   before(async () => {
     cEther = await CEther.at(COMPOUND_ETH_CONTRACT)
-    wallet = await Wallet.new(COMPOUND_ETH_CONTRACT, demomination)
+    pool = await Pool.deployed()
+    wallet = await Wallet.new(COMPOUND_ETH_CONTRACT, demomination, pool.address)
     snapshotId = await takeSnapshot()
   })
 
@@ -98,17 +101,17 @@ contract('Wallet', async accounts => {
 
       const balanceWaletBefore = await web3.eth.getBalance(wallet.address)
       const balanceCompoundBefore = await web3.eth.getBalance(cEther.address)
-      const balanceOwnerBefore = await web3.eth.getBalance(owner)
-      console.log('balanceOwnerBefore', balanceOwnerBefore.toString())
+      const balancePoolBefore = await web3.eth.getBalance(pool.address)
+      console.log('balancepoolBefore', balancePoolBefore.toString())
       await wallet.withdrawInterest({ gasPrice: 0 })
-      const balanceOwnerAfter = await web3.eth.getBalance(owner)
-      console.log('balanceOwnerAfter', balanceOwnerAfter.toString())
+      const balancePoolAfter = await web3.eth.getBalance(pool.address)
+      console.log('balancepoolAfter', balancePoolAfter.toString())
       const balanceWaletAfter = await web3.eth.getBalance(wallet.address)
       const balanceCompoundAfter = await web3.eth.getBalance(cEther.address)
 
       // balanceCompoundAfter.should.be.eq.BN(toBN(balanceCompoundBefore).sub(interest))
       balanceWaletBefore.should.be.eq.BN(toBN(balanceWaletAfter))
-      balanceOwnerAfter.should.be.gte.BN(toBN(balanceOwnerBefore).add(interest))
+      balancePoolAfter.should.be.gte.BN(toBN(balancePoolBefore).add(interest))
     })
   })
 
