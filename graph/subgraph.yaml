@@ -1,0 +1,26 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Contract
+    network: ropsten
+    source:
+      address: "0x2a80f877f4744dCFd1Ab7A9F84699702b16C26CF"
+      abi: Contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.2
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+        - Approval
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: Transfer(address,address,uint256)
+          handler: handleTransfer
+        - event: Approval(address,address,uint256)
+          handler: handleApproval
+      file: ./src/mapping.ts
