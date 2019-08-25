@@ -57,17 +57,10 @@
             <div class="column">
               <div class="subtitle">Shares</div>
               <ul>
-                <li>
-                  <span class="value">You</span>
+                <li v-for="(hodler, index) in hodlersToRender" :key="index">
+                  <span class="value">{{ hodler.my ? 'You' : hodler.address.slice(0, 10) }}</span>
                   <span class="sep">-</span>
-                  <span class="data">{{ sharePercent }}%</span>
-                  <span class="sep">-</span>
-                  <span class="data">{{ daoEthValue }} {{ networkConfig.currencyName }}</span>
-                </li>
-                <li>
-                  <span class="value">User2</span>
-                  <span class="sep">-</span>
-                  <span class="data">90%</span>
+                  <span class="data">{{ hodler.share }}%</span>
                 </li>
               </ul>
             </div>
@@ -103,6 +96,7 @@ export default {
     ...mapGetters('txHashKeeper', ['txs', 'txExplorerUrl']),
     ...mapGetters('metamask', ['networkConfig', 'hasEthAccount', 'netId']),
     ...mapGetters('wallet', ['walletBalance', 'walletInterest']),
+    ...mapGetters('dao', ['hodlersToRender']),
     ...mapState('dao', ['sharePercent', 'daoEthValue'])
   },
   mounted() {
