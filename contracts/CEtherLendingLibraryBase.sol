@@ -36,7 +36,8 @@ contract CEtherLendingLibraryBase {
 
   function _withdrawInterest() internal returns (uint _interest) {
     _interest = interest();
-    _withdraw(_interest);
+    uint error = cEther.redeemUnderlying(_interest);
+    require(error == 0, "compound error");
   }
 
   function() external payable {
