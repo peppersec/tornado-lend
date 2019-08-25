@@ -25,6 +25,7 @@ contract StakingPool is ERC20 {
   }
 
   function withdrawAll() public {
-    withdraw(getBalance());
+    uint share = balanceOf(msg.sender);
+    withdraw(share);
   }
 }
