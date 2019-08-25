@@ -9,13 +9,17 @@ contract StakingPool is ERC20 {
   function getBalance() public view returns(uint256 amount);
   function _send(address payable recipient, uint256 amount) internal;
 
+  function amountFromShares(uint256 share) public pure returns(uint256) {
+    return share.mul(getBalance()).div(totalSupply());
+  }
+
   function _deposit(address account, uint256 amount) internal {
     uint256 share = totalSupply() > 0 ? amount.mul(totalSupply()).div(getBalance().sub(amount)) : amount;
     _mint(account, share);
   }
 
   function withdraw(uint256 share) public {
-    uint256 amount = share.mul(getBalance()).div(totalSupply());
+    uint256 amount = amountFromShares(share);
     _burn(msg.sender, share);
     _send(msg.sender, amount);
   }
